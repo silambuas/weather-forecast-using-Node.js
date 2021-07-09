@@ -5,14 +5,10 @@ const address = process.argv[2];
 
 if (!address) return console.log("Please provide an address");
 
-geocode(address, (geocodeError, geocodeData) => {
+geocode(address, (geocodeError, { latitude, longitude, location } = {}) => {
 	if (geocodeError) return console.log(geocodeError);
-	forecast(
-		geocodeData.latitude,
-		geocodeData.longitude,
-		(forecastError, forecastData) => {
-			if (forecastError) return console.log(forecastError);
-			console.log(`In ${geocodeData.location}  :   ${forecastData}`);
-		}
-	);
+	forecast(latitude, longitude, (forecastError, forecastData) => {
+		if (forecastError) return console.log(forecastError);
+		console.log(`In ${location}  :   ${forecastData}`);
+	});
 });
